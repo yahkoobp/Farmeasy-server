@@ -1,15 +1,18 @@
 const mongoose = require('mongoose');
-
+const user = require("./User")
 const ProductSchema = new mongoose.Schema(
     {
-        title :{type:String , required:true},
+        title :{type:String },
         desc : {type:String },
-        categories :{type:Array ,required:true},
-        seller:{type:String },
+        category :{type:String ,required:true},
+        subcat:{type:String ,required:true},
+        image:{type:String },
+        seller:{type:mongoose.SchemaTypes.ObjectId, ref:user },
         address :{type:String},
         place :{type:String},
         price :{type:Number , required:true},
-        available:{type:Boolean ,default:true}
+        Locality:{type:String},
+        available:{type:String}
     
     },
     {timestamps:true}
