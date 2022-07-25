@@ -1,12 +1,13 @@
 const mongoose = require('mongoose')
+const user = require("./User")
 
-const BasketSchema = mongoose.Schema(
+const OrderSchema = mongoose.Schema(
     {
         userId :{type:mongoose.SchemaTypes.ObjectId ,ref:user,index:true},
-        products:[ ]
+        products:{type:Array}
     },
     {timestamps : true}
 )
 
 
-module.exports = mongoose.model("Basket",BasketSchema)
+module.exports = mongoose.model("Order",OrderSchema)

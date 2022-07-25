@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
         orders:{type:Array},
         basketCount :{type:Number,default:0},
         isSeller:{type:Boolean, default:false},
-        isAdmin: {type:Boolean, default:false},
+        phone:{type:Number}
     
     },
     {timestamps:true}

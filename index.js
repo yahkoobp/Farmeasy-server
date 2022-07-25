@@ -6,6 +6,8 @@ const productRoute = require("./routes/product")
 const basketRoute = require("./routes/basket")
 const sellerRoute = require("./routes/seller")
 const orderRoute = require("./routes/orders")
+const adminRoute = require("./routes/admin")
+const sellerRequestRoute = require("./routes/SellerRequest")
 
 const app = express();
 app.use(express.json({limit:'50mb'}))
@@ -17,10 +19,11 @@ app.use("/api/product/",productRoute)
 app.use("/api/basket/",basketRoute)
 app.use("/api/seller/",sellerRoute)
 app.use("/api/orders/",orderRoute)
-
+app.use("/api/admin/",adminRoute)
+app.use("/api/seller-request/",sellerRequestRoute)
 const PORT = 5000;
 
-mongoose.connect("mongodb+srv://yahkoob:farmeasygecw@cluster0.jpxcj6c.mongodb.net/Farmesy?retryWrites=true&w=majority")
+mongoose.connect("mongodb://localhost:27017/farmeasy")
 .then(()=>console.log("data base connected"))
 .catch((err)=>{
     console.log(err)
@@ -35,5 +38,5 @@ app.listen(PORT,()=>{
     console.log("Back end server is running....")
 })
 
-
+//"mongodb+srv://yahkoob:farmeasygecw@cluster0.jpxcj6c.mongodb.net/Farmesy?retryWrites=true&w=majority"
 

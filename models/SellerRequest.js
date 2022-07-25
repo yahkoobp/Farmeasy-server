@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const user = require("./User")
-const sellerSchema = new mongoose.Schema(
+const sellerRequestSchema = new mongoose.Schema(
     {
         userId :{type:mongoose.SchemaTypes.ObjectId,ref:"user"},
         firstname :{type:String ,required:true},
@@ -11,7 +11,7 @@ const sellerSchema = new mongoose.Schema(
         details:{type:String},
         products:{type :Array},
         orders:{type:Array},
-        isSeller:{type:Boolean,default:true},
+        isSeller:{type:Boolean,default:false},
         Rating:{type:Number}
     
     },
@@ -19,4 +19,4 @@ const sellerSchema = new mongoose.Schema(
     
 )
 
-module.exports = mongoose.model("Seller",sellerSchema)
+module.exports = mongoose.model("SellerRequest",sellerRequestSchema)

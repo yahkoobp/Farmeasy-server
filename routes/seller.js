@@ -1,6 +1,7 @@
 const {Router} = require("express")
 const userModel = require ("../models/User")
 const sellerModel = require("../models/Seller")
+const productModel = require("../models/Product")
 const {status} = require("express/lib/response")
 const CryptoJS = require("crypto-js")
 const dotenv = require("dotenv")
@@ -12,15 +13,8 @@ const router = require("express").Router()
 //REGISTER
 
 router.post("/seller-register", async (req, res) => {
-    const newSeller = new sellerModel({
-      userId :req.body.u_id,
-      firstname:req.body.firstname,
-      lastname:req.body.lastname,
-      email:req.body.email,
-      address:req.body.address,
-      details:req.body.details,
-      city:req.body.city
-    })
+    console.log(req.body)
+    const newSeller = new sellerModel(req.body)
   
     try {
       const savedSeller = await newSeller.save();
@@ -59,6 +53,48 @@ router.post("/orders/:id",async(req,res)=>{
       res.status(500).json(err)
   }
 })
+
+//GET ORDERS
+
+router.get("/orders/find/:id",async(req,res)=>{
+  const sellerOrders = await sellerModel.findOne({userId:req.params.id})
+  try{
+    res.status(200).json(sellerOrders)
+  }catch(err){
+    console.log(err)
+  }
+})
+
+// MARK AS DELIVERED
+
+// router.put("/delivery/:id",async(req,res) =>{
+ 
+//   console.log(req.params.id)
+//   const updatedProduct = await productModel.findByIdAndUpdate(req.params.id,{$set :{isDelivered:true}} )
+  
+//   try{
+//     const savedProduct = await updatedProduct.save()
+//     res.status(200).json(savedProduct)
+//     console.log(savedProduct)
+// }catch(err){
+//     res.status(500).json(err)
+// }
+// })
+
+router.put("/delivery/:id",async(req,res) =>{
+ 
+  console.log(req.params.id)
+  const updatedProduct = await productModel.findByIdAndUpdate(req.params.id,{$set :{isDelivered:true}} )
+  
+  try{
+    const savedProduct = await updatedProduct.save()
+    res.status(200).json(savedProduct)
+    console.log(savedProduct)
+}catch(err){
+    res.status(500).json(err)
+}
+})
+
 
 
 

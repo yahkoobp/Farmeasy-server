@@ -14,6 +14,7 @@ router.post("/register", async (req, res) => {
       firstname:req.body.firstname,
       lastname:req.body.lastname,
       email:req.body.email,
+      phone:req.body.phone,
       password:CryptoJS.AES.encrypt(req.body.password,'farmeasy').toString(),
       city:req.body.city
     })
