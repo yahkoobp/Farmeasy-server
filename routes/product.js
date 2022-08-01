@@ -11,6 +11,7 @@ router.post("/",async (req, res) => {
      title:req.body.title,
      category:req.body.category,
      subcat:req.body.subcat,
+     image:req.body.image,
      seller:req.body.seller_id,
      price:req.body.price,
      Locality:req.body.Locality

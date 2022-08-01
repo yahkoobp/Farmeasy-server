@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema(
         city :{type:String},
         cartProducts:{type :Array},
         orders:{type:Array},
-        basketCount :{type:Number,default:0},
         isSeller:{type:Boolean, default:false},
         phone:{type:Number}
     

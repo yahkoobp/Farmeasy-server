@@ -6,6 +6,7 @@ const AdminSchema = new mongoose.Schema(
         lastname : {type:String}, 
         email : {type:String ,unique:true},
         password :{type:String},
+        userReviews:{type:Array,default:[]}
     
     },
     {timestamps:true}

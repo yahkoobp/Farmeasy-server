@@ -8,6 +8,7 @@ const dotenv = require("dotenv")
 const mongoose = require('mongoose');
 
 
+
 const router = require("express").Router()
 
 //REGISTER
@@ -81,22 +82,79 @@ router.get("/orders/find/:id",async(req,res)=>{
 // }
 // })
 
-router.put("/delivery/:id",async(req,res) =>{
- 
-  console.log(req.params.id)
-  const updatedProduct = await productModel.findByIdAndUpdate(req.params.id,{$set :{isDelivered:true}} )
+router.put("/delivery/:id/",async(req,res) =>{
+  const pid = req.params.id.toString()
+  console.log(pid)
+  console.log(req.query.user)
+  const newOrder = await userModel.findOneAndUpdate({_id:req.query.user,orders:{$elemMatch:{_id:pid}}},{$set:{"orders.$.isDelivered":true}})
+  console.log(newOrder)
+//   try{
+//     const savedOrder = await newOrder.save()
+//     res.status(200).json(savedOrder)
+//     console.log(savedOrder)
+// }catch(err){
+//     res.status(500).json(err)
+// }
+})
+
+//GET DELEVERY INFO
+
+router.put("/deliveryInfo/:seller/",async(req,res) =>{
+  const uid = req.query.user.toString()
+  const sellerId = mongoose.Types.ObjectId(req.params.seller)
   
+  const orderInfo = await sellerModel.findOneAndUpdate({userId:sellerId,orders:{$elemMatch:{user_id:uid}}},{$set:{"orders.$.isDelivered":true}})
+  console.log(orderInfo)
+
   try{
-    const savedProduct = await updatedProduct.save()
-    res.status(200).json(savedProduct)
-    console.log(savedProduct)
-}catch(err){
-    res.status(500).json(err)
-}
+    res.status(200).json(orderInfo)
+  }catch(err){
+    res.status(500).json(err)                                      
+  }
 })
 
 
+//ADD REVIEW
 
+router.post("/rating/:id",async(req,res)=>{
+  console.log(req.body)
+  const sellerId = mongoose.Types.ObjectId(req.params.id)
+  
+  const newOrder = await sellerModel.findOneAndUpdate({userId:sellerId},{$push:{ratings:req.body.rating}})
+    console.log(newOrder)
+  try{
+      const savedOrder = await newOrder.save()
+      res.status(200).json(savedOrder)
+  }catch(err){
+      res.status(500).json(err)
+  }
+})
+
+router.put("/totalrating/:id",async(req,res)=>{
+  console.log(req.body)
+  const sellerId = mongoose.Types.ObjectId(req.params.id)
+  
+  const newOrder = await sellerModel.findOneAndUpdate({userId:sellerId},{$set:{totalRating:req.body.totalRate}})
+    console.log(newOrder)
+  try{
+      const savedOrder = await newOrder.save()
+      res.status(200).json(savedOrder)
+  }catch(err){
+      res.status(500).json(err)
+  }
+})
+
+router.get("/get-seller/:id",async(req,res)=>{
+  // const sellerId = mongoose.Types.ObjectId(req.params.id)
+  // console.log(sellerId)
+
+  const seller = await sellerModel.findOne({userId:req.params.id})
+  try{
+    res.status(200).json(seller)
+  }catch(err){
+    console.log(err)
+  }
+})
 
 
 

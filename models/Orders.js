@@ -4,7 +4,7 @@ const user = require("./User")
 const OrderSchema = mongoose.Schema(
     {
         userId :{type:mongoose.SchemaTypes.ObjectId ,ref:user,index:true},
-        products:{type:Array}
+        products:{type:Array,default:[]}
     },
     {timestamps : true}
 )

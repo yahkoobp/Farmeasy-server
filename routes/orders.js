@@ -1,6 +1,7 @@
 const basketModel = require ("../models/Basket")
 const {status} = require("express/lib/response")
 const User = require("../models/User")
+const Order = require("../models/Orders")
 const router = require("express").Router()
 
 
@@ -9,7 +10,7 @@ const router = require("express").Router()
 router.post("/:id",async(req,res)=>{
   
     
-    const newOrder = await User.findOneAndUpdate({_id:req.params.id},{$push :{orders:req.body.bag}})
+    const newOrder = await User.findOneAndUpdate({_id:req.params.id},{$push :{orders:req.body.product}})
       
     try{
         const savedOrder = await newOrder.save()
@@ -18,6 +19,25 @@ router.post("/:id",async(req,res)=>{
         res.status(500).json(err)
     }
 })
+
+//ADD TO ORDERS
+
+// router.post("/:id",async(req,res)=>{
+  
+    
+//     const newOrder = await new Order({
+//         userId:req.params._id,
+//         products:req.body.bag
+//     })
+      
+//     try{
+//         const savedOrder = await newOrder.save()
+//         res.status(200).json(savedOrder)
+//     }catch(err){
+//         res.status(500).json(err)
+//     }
+// })
+
 
 
 

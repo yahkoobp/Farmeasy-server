@@ -12,7 +12,8 @@ const sellerSchema = new mongoose.Schema(
         products:{type :Array},
         orders:{type:Array},
         isSeller:{type:Boolean,default:true},
-        Rating:{type:Number}
+        ratings:{type:Array,default:[]},
+        totalRating:{type:Number,default:0}
     
     },
     {timestamps:true}
